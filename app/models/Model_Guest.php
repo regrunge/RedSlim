@@ -3,17 +3,19 @@
 /**
  * Object model mapping for relational table `guest` 
  */
-class Model_Guest extends RedBean_SimpleModel {
+class Model_Guest extends Model_Base {
     
-    // lifecycle hooks
-    
-    public function dispense() {
-        $this->role = 'guest';
+    public function getAll($isBean = false) {
+        if ($isBean)
+            return R::findAll('guest', 'ORDER BY modify_date DESC');
+        else
+            return R::getAll('SELECT * FROM guest ORDER BY modify_date DESC');
     }
-   
-    
-    public function update() {
-        $this->modify_date = date("Y-m-d H:i:s");
+
+    // lifecycle hooks
+    public function dispense() {
+        parent::dispense();
+        $this->bean->role = $this->beanType;
     }
 
 }

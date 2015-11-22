@@ -12,6 +12,10 @@ To learn more about these powerful components, check this out:
 * **View/Template**: Twig ([fabpot/Twig](https://github.com/fabpot/Twig))
 * **UI Toolkit**: Twitter Bootstrap ([twitter/bootstrap](https://github.com/twitter/bootstrap))
 
+## Versions
+
+There are two branches - *master* and *php52*. Because many new PHP features (e.g. closure) require PHP5.3+ and so do the above components, *php52* is a special release for those who have no choice to upgrade server version but still want to deploy RedSlim. This branch will not receive further support and development.
+
 ## Installation
 
 ### Pagoda Box Quickstart
@@ -34,6 +38,11 @@ Suppose your document root is in /var/www, clone the repository as follows:
 	cd /var/www
 	git clone https://github.com/vanting/RedSlim.git redslim
 
+Run these commands to globally install composer on your system:
+
+	curl -sS https://getcomposer.org/installer | php
+	mv composer.phar /usr/local/bin/composer
+
 The required vendor libraries can be installed/updated using [Composer](http://getcomposer.org/). Go to the project root (where you see the file *composer.json*) and run the following command:
 
 	cd ./redslim
@@ -43,12 +52,19 @@ There are some directories should be made writeable to your web server process.
 
 	chmod -R 777 ./app/storage
 
-Then, update your apache config file to set your document root to the **web** subdirectory.
+Then, update your apache config file to set your document root to the **web** subdirectory. This helps to secure your scripts which should normally be put inside the **app/** folder.
 
 	<VirtualHost *:80>
 		DocumentRoot /var/www/redslim/web
 		ServerName example.com
 	</VirtualHost>
+
+Note that in order to make the *.htaccess* effective, your main apache config file must allow subdirectory to override it.  
+
+	<Directory "/var/www">
+		AllowOverride All
+	</Directory>
+
 
 ##Structure
 
@@ -66,7 +82,7 @@ Then, update your apache config file to set your document root to the **web** su
 
 #### Demo
 
-* Site: [http://redslim.gopagoda.com/](http://redslim.gopagoda.com/)
+* Site: [http://redslim.ga/](http://redslim.ga/)
     
 #### Macros
 
@@ -94,6 +110,5 @@ The RedSlim framework is open-sourced software licensed under the [MIT license](
 
 ----------
 
-[![githalytics.com alpha](https://cruel-carlota.pagodabox.com/0b6eb25e8a80d2b92efb67525823d25c "githalytics.com")](http://githalytics.com/vanting/RedSlim)
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/vanting/RedSlim/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
 
